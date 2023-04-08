@@ -1,4 +1,5 @@
 <template>
+<section>
 <div class=" bg-primary firstline">
 </div>
     <section class="vh-100 mt-5">
@@ -72,7 +73,7 @@
   </div>
 
 </section>
-
+</section>
 </template>
 
 <script>
@@ -96,12 +97,11 @@ export default{
             user_email:this.enteredEmail,
             password:this.enteredPassword
           }
-          const user=await axios.post('http://localhost:3000/user/login',loginUser)
-          if(user.data==='Invalid Email'){this.isEmail='invalid'}
-          else if(user.data==='Invalid Password'){this.isPassword='invalid'}
+          this.$store.state.user=await axios.post('http://localhost:3000/user/login',loginUser)
+          if(this.$store.state.user.data==='Invalid Email'){this.isEmail='invalid'}
+          else if(this.$store.state.user.data==='Invalid Password'){this.isPassword='invalid'}
           else{
-            console.log(user)
-          this.$router.push('/signup')
+          this.$router.push('/theresources')
           } 
     },
 

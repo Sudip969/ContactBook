@@ -1,4 +1,5 @@
 <template>
+<section>
   <div class="bg-primary firstline"></div>
   <section class="vh-100 mt-5">
     <div class="container-fluid">
@@ -99,6 +100,7 @@
     </div>
   
   </section>
+</section>
 </template>
 
 <script>
@@ -122,9 +124,9 @@ export default{
                 user_email:this.enteredEmail,
                 password:this.enteredPassword
             }
-            const user =await axios.post('http://localhost:3000/user/signup',newUser)
-            console.log(user)
-            this.$router.push('/')
+           this.$store.state.user =await axios.post('http://localhost:3000/user/signup',newUser)
+            console.log(this.$store.state.user)
+            this.$router.push('/theresources')
     },
     validityName(){
         if(this.enteredName.trim()===""){this.isName="invalid"}
