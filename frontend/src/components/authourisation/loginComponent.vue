@@ -1,6 +1,6 @@
 <template>
 <section>
-<div class=" bg-primary firstline">
+<div class="  firstline">
 </div>
     <section class="vh-100 mt-5">
   <div class="container-fluid ">
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 
 
 export default{
@@ -97,12 +97,14 @@ export default{
             user_email:this.enteredEmail,
             password:this.enteredPassword
           }
-          this.$store.state.user=await axios.post('http://localhost:3000/user/login',loginUser)
-          if(this.$store.state.user.data==='Invalid Email'){this.isEmail='invalid'}
-          else if(this.$store.state.user.data==='Invalid Password'){this.isPassword='invalid'}
-          else{
+          // this.$store.state.user=await axios.post('http://localhost:3000/user/login',loginUser)
+          // if(this.$store.state.user.data==='Invalid Email'){this.isEmail='invalid'}
+          // else if(this.$store.state.user.data==='Invalid Password'){this.isPassword='invalid'}
+          // else{
+            this.$store.state.user=loginUser;
+            console.log(this.$store.state.user)
           this.$router.push('/theresources')
-          } 
+          // } 
     },
 
     validityEmail(){
@@ -121,7 +123,8 @@ export default{
 <style scoped>
 
 .firstline {
-  padding: 20px;
+  padding: 25px;
+  background-color:#020c22;
 }
 .invalid input{
     border-color: red;

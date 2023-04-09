@@ -1,6 +1,6 @@
 <template>
 <section>
-  <div class="bg-primary firstline"></div>
+  <div class=" firstline"></div>
   <section class="vh-100 mt-5">
     <div class="container-fluid">
       <div class="row d-flex justify-content-center align-items-center">
@@ -16,7 +16,7 @@
             <div
               class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start"
             >
-              <p class="lead fw-normal mb-0 me-3">Sign in with</p>
+              <p class="lead fw-normal mb-0 me-3">Sign up with</p>
               <button
                 type="button"
                 class="btn btn-success  mt-1 mx-1"
@@ -148,7 +148,8 @@ export default{
 <style scoped>
 
 .firstline {
-  padding: 20px;
+  padding: 25px;
+   background-color:#020c22
 }
 .invalid input{
     border-color: red;
