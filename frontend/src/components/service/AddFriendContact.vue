@@ -20,7 +20,7 @@
         <label class="fw-bold w-25 form-label ">Name:</label>
         <input class="form-control form-control-lg" type="text" v-model="enteredName" @blur="validityName"> 
    
-        <!-- <p v-if="userName ==='invalid'">Invalid name  </p> -->
+        <p v-if="userName ==='invalid'">Invalid name  </p>
             </div>
         </div>
 
@@ -32,7 +32,7 @@
           maxlength="10" 
            v-model="enteredNo"
             @blur="validityNumber">
-        <!-- <p v-if="phoneNumber=== 'invalid'">Invalid number </p> -->
+        <p v-if="phoneNumber=== 'invalid'">Invalid number </p>
         </div>
         </div>
 
@@ -40,7 +40,7 @@
              <div class="form-outline mb-3">
         <label class="fw-bold w-25 form-label">E-mail:</label>
         <input  class="form-control form-control-lg" type="email" v-model="enteredEmail"  @blur="validityEmail">
-        <!-- <p v-if="email === 'invalid'">Invalid e-mail</p> -->
+        <p v-if="email === 'invalid'">Invalid e-mail</p>
         </div>
         </div>
 
@@ -120,10 +120,12 @@ export default{
             name:name,
             phone:phone,
             email:email,
-            favourite:false        
+            favourite:false ,
+            user_id:this.$store.state.user.data.user_id       
             };
-            await axios.post('http://localhost:3000/insert',newFriend)
-           this.$router.push('/friendcontacts')
+            const user=await axios.post('http://localhost:3000/insert' ,newFriend)
+           console.log(user)
+           this.$router.push('/theresources/friendcontacts')
         },
     }
 }
@@ -134,7 +136,8 @@ export default{
 .invalid input{
     border-color: red;
 }
-.invalid label{
+.invalid label,
+.invalid p{
     color: red;
 }
  input {

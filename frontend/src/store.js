@@ -3,7 +3,16 @@ import { createStore } from "vuex";
 const store =createStore({
     state(){
         return{
-            user:null
+            user:null,
+            friends:[]
+        }
+    },
+    getters:{
+        isAuth(){
+            if(localStorage.getItem("token")===null){
+                return false;
+            }
+            return true ;
         }
     }
 })

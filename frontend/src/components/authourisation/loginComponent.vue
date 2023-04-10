@@ -77,7 +77,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 
 
 export default{
@@ -97,14 +97,15 @@ export default{
             user_email:this.enteredEmail,
             password:this.enteredPassword
           }
-          // this.$store.state.user=await axios.post('http://localhost:3000/user/login',loginUser)
-          // if(this.$store.state.user.data==='Invalid Email'){this.isEmail='invalid'}
-          // else if(this.$store.state.user.data==='Invalid Password'){this.isPassword='invalid'}
-          // else{
-            this.$store.state.user=loginUser;
-            console.log(this.$store.state.user)
-          this.$router.push('/theresources')
-          // } 
+          this.$store.state.user=await axios.post('http://localhost:3000/user/login',loginUser)
+          if(this.$store.state.user.data==='Invalid Email'){this.isEmail='invalid'}
+          else if(this.$store.state.user.data==='Invalid Password'){this.isPassword='invalid'}
+          else{
+            console.log(this.$store.state.user.data.tokens)
+            localStorage.setItem('token',this.$store.state.user.data.tokens)
+            //  document.cookie('jwt',this.$store.state.user.data.tokens);
+          this.$router.replace('/theresources')
+          } 
     },
 
     validityEmail(){
