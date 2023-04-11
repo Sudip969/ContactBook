@@ -20,9 +20,7 @@
         <div class="menu">
           <ul>
             <li>
-              <router-link
-                to="/theresources/friendcontacts"
-              
+              <router-link to="/theresources/friendcontacts"
                 ><span><BootstrapIcon icon="person-fill" /></span
                 ><span>Friends</span></router-link
               >
@@ -31,6 +29,24 @@
               <router-link to="/theresources/addfriendcontact"
                 ><span><BootstrapIcon icon="person-fill-add" /></span
                 ><span>Add Friend</span></router-link
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="menu">
+          <ul>
+            <li class="d-inline-flex">
+              <input
+                type="text"
+                placeholder="Search"
+                class="form-control"
+                v-model="searchedContact"/>
+              <span><button class="btn btn-success ms-1" @click="searchContact">
+                  <BootstrapIcon icon="search" /></button></span>
+            </li>
+            <li>
+              <a @click="logOut()" class="aOut"
+                ><span><BootstrapIcon icon="box-arrow-right" /></span>Log out</a
               >
             </li>
           </ul>
@@ -49,6 +65,8 @@ export default {
     return {
       userName: "",
       userEmail: "",
+      
+      searchedContact: "",
     };
   },
 
@@ -57,36 +75,69 @@ export default {
       getContacts: this.getContacts,
     };
   },
+  watch: {
+    searchedContact(changes) {
+      if (changes === "") {
+        this.getContacts();
+      }
+    },
+  },
   mounted() {
-    
     this.getUser();
   },
   methods: {
     async getContacts() {
-      const token = localStorage.getItem("token");
-      
-      const contacts = await axios.get("http://localhost:3000/select", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-  
-      this.$store.state.friends = contacts.data;
+      const userId=this.$store.state.user.data.user_id;
+      const contacts = await axios.get(`http://localhost:3000/select/${userId}`);
+      if(typeof(contacts.data)==="object"){
+        this.$store.state.friends=contacts.data
+      }else{
+      this.$store.state.friends = null;
+    }
     },
     async getUser() {
       const token = localStorage.getItem("token");
-
+      console.log(token);
       this.$store.state.user = await axios.get(
         `http://localhost:3000/user/select/${token}`
       );
-     
+      console.log(this.$store.state.user.data);
       this.userName = this.$store.state.user.data.user_name;
       this.userEmail = this.$store.state.user.data.user_email;
-      this.$router.push('/theresources/friendcontacts')
+      this.userId= this.$store.state.user.data.user_id;
+      this.$router.push("/theresources/friendcontacts");
     },
+    logOut() {
+      localStorage.clear("token");
+      this.$router.replace("/login");
+    },
+    async searchContact(){
+          this.$store.state.friends = [];
+      this.$store.state.friends.push(
+        (
+          await axios.get(
+            `http://localhost:3000/select/${this.userId}/${this.searchedContact}`
+          )
+        ).data
+      );
+    }
   },
 };
 </script>
 
 <style scoped>
+input {
+  margin-left: 16px;
+  max-width: 10rem;
+}
+
+.aOut {
+  position: absolute;
+  top: 17rem;
+  border-top: 1px solid #055698;
+  font-size: 16px;
+}
+
 header {
   background-color: #020c22;
   height: 4.5rem;
@@ -146,7 +197,9 @@ a.router-link-active {
 .bi {
   margin-right: 10px;
 }
-
+h2 {
+  color: white;
+}
 .wrapper .sidebar li {
   color: #dee4ec;
   width: 30px;

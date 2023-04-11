@@ -14,12 +14,12 @@
 <div class="container-fluid ">
     <div class="row d-flex justify-content-center align-items-center ">
 
-     <div >
+     <div>
     <form @submit.prevent>
         <div :class="{invalid: userName==='invalid'}">
               <div class="form-outline mb-4">
         <label class="fw-bold w-25 form-label ">Name:</label>
-        <input class="form-control form-control-lg" type="text" v-model="enteredName" @blur="validityName"> 
+        <input class="form-control form-control-lg" type="text" v-model="editName" @blur="validityName"> 
    
         <p v-if="userName ==='invalid'">Invalid name  </p>
             </div>
@@ -31,7 +31,7 @@
         <input class="form-control form-control-lg"
           type="tel" 
           maxlength="10" 
-           v-model="enteredNo"
+           v-model="editNo"
             @blur="validityNumber">
         <p v-if="phoneNumber=== 'invalid'">Invalid number </p>
         </div>
@@ -40,15 +40,15 @@
         <div  :class="{invalid: email ==='invalid'}">
              <div class="form-outline mb-3">
         <label class="fw-bold w-25 form-label">E-mail:</label>
-        <input  class="form-control form-control-lg" type="email" v-model="enteredEmail"  @blur="validityEmail">
+        <input  class="form-control form-control-lg" type="email" v-model="editEmail"  @blur="validityEmail">
         <p v-if="email === 'invalid'">Invalid e-mail</p>
         </div>
         </div>
 
 
         <div>
-        <button class=" btn btn-success border border-dark" @click="submitData()" >Add Contact</button>
-        <button class ="btn btn-danger ms-1 border-dark" @click="onClear()" >Clear</button>
+        <button class=" btn btn-success border border-dark" @click="editContact()" >Confirm</button>
+        <button class ="btn btn-danger ms-1 border-dark" @click="onCancel()" >Cancel</button>
         </div>
     </form> 
      </div>
@@ -62,38 +62,45 @@
 <script>
 import axios from 'axios'
 export default{
-   
-    
-    data(){
-        return{
-        enteredName:"",
-        enteredNo:"",
-        enteredEmail:"",
-        inputIsInvalid:false,
-        userName:'pending',
-        phoneNumber:"pending",
-        email:"pending"
-        }
-    },
-    methods:{
-        onClear(){
-            this.enteredName="",
-            this.enteredNo="",
-            this.enteredEmail=""
-        },
-        submitData(){
-            if(this.enteredName.trim() === "" || this.enteredNo.trim() === ""|| this.enteredEmail.trim() === "" || this.phoneNumber==='invalid' || this.userName=='invalid' || this.email=='invalid' )
+ 
+inject:[],
+data(){
+   return{
+      id:null,
+      editName:"",
+      editNo:"",
+      editEmail:"",
+      inputIsInvalid:false,
+      userName:'pending',
+      phoneNumber:"pending",
+      email:"pending"
+      
+   }
+}, 
+created(){
+    console.log(this.$store.state.friends)
+   this.id = +this.$route.params.id
+  
+   const friend=this.$store.state.friends.find(frnd=>frnd.id === this.id)
+   console.log(friend.name)
+   this.editName=friend.name;
+   this.editNo=friend.phone;
+   this.editEmail=friend.email;
+},
+methods:{
+   editContact(){
+        if(this.editName.trim() === "" || this.editNo.trim() === ""|| this.editEmail.trim() === "" || this.phoneNumber==='invalid' || this.userName=='invalid' || this.email=='invalid' )
                 {
                     this.inputIsInvalid=true;
                     return;
                 }
-           this.addContact(this.enteredName,this.enteredNo,this.enteredEmail)
+           this.updateContact(this.editName,this.editNo,this.editEmail)
         },
         confirmError(){
             this.inputIsInvalid=false
         },
         validityName(){
-            if (this.enteredName.trim()===""){
+            if (this.editName.trim()===""){
                 this.userName="invalid"
                
                 }
@@ -102,7 +109,7 @@ export default{
             }
         },
         validityNumber(){
-               if(this.enteredNo===null  || !/^\d{10}$/.test(this.enteredNo)){
+               if(this.editNo===null  || !/^\d{10}$/.test(this.editNo)){
                 this.phoneNumber="invalid"
             }
             else{
@@ -110,45 +117,46 @@ export default{
             }
         },
         validityEmail(){
-                if(this.enteredEmail.trim()===null  || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.enteredEmail.trim())){
+                if(this.editEmail.trim()===null  || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.editEmail.trim())){
                 this.email="invalid"
             }
             else{
                 this.email="valid"
             }
         },
-            async addContact(name,phone,email){
+         async updateContact(name,phone,email){
                
-        const newFriend={
+        const updateFriend={
             name:name,
             phone:phone,
             email:email,
-            favourite:false ,
-            user_id:this.$store.state.user.data.user_id       
+                  
             };
-            
-            console.log(newFriend)
-            const user=await axios.post('http://localhost:3000/insert', newFriend)
-           console.log(user)
-           this.$router.push('/theresources/friendcontacts')
+            await axios.put(`http://localhost:3000/update/${this.id}`,updateFriend)
+            this.$router.push('/theresources/friendcontacts') 
         },
-    }
+        onCancel(){
+          this.$router.push('/theresources/friendcontacts') 
+        }
+}
 }
 </script>
 
-
 <style scoped>
+button{
+   margin-left:2px;
+   
+}
 .invalid input{
     border-color: red;
 }
-.invalid label,
-.invalid p{
+.invalid label{
     color: red;
 }
- input {
-    border-width: 1px;
-    border-radius: 5px;
-    border-color:black;
+p{
+    font-family:Verdana ;
+    margin-left: 7px;
+    margin-top:3px
 }
 li{
    
@@ -169,6 +177,10 @@ ul{
   max-width: 38.5rem;
 
 }
-
+ input {
+    border-width: 1px;
+    border-radius: 5px;
+    border-color:black;
+}
 
 </style>

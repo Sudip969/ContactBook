@@ -6,6 +6,7 @@ import TheResources from './components/service/TheResources.vue'
 
 import FriendContacts from './components/service/FriendContacts.vue';
 import AddFriendContact from './components/service/AddFriendContact.vue';
+import EditContact from './components/service/EditContact.vue';
 
 import store from './store';
 
@@ -16,8 +17,9 @@ const router=createRouter({
         {path:'/login', component:loginComponent},
         {path:'/signup', component:signupComponent},
         {path:'/theresources',component:TheResources,children:[
-            {path:'friendcontacts',component:FriendContacts,meta:{requiresAuth:true}},
-            {path:'addfriendcontact',component:AddFriendContact,meta:{requiresAuth:true}}
+            {path:'friendcontacts/',component:FriendContacts,meta:{requiresAuth:true}},
+            {path:'addfriendcontact',component:AddFriendContact,meta:{requiresAuth:true}},
+            {path:'friendcontacts/edit/:id',component:EditContact,meta:{requiresAuth:true}}
         ],meta:{requiresAuth:true}}
     ]
 })
