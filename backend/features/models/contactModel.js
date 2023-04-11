@@ -27,10 +27,10 @@ User.init(                                    //Define the Schema object
       type:DataTypes.BOOLEAN,
       allowNull:true
     },
-    // user_id:{
-    //   type:DataTypes.INTEGER,
-    //   allowNull:false
-    // }
+    user_id:{
+      type:DataTypes.INTEGER,
+      allowNull:true
+    }
   },
   {
     sequelize,

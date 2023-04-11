@@ -13,10 +13,10 @@ const repObj = {
   async select(req) {
     //repo for select without id
     if (!req.params.name) {
-      const data = await User.findAll();
+      const data = await User.findAll({where:{user_id:req.params.userId}});
       return data;
     }
-    //repo for select by id
+    //repo for select by name
     const data = await User.findOne({ where: { name: req.params.name } });
     if (data) {
       return data;

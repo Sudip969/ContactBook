@@ -56,16 +56,16 @@ const repObj = {
     //   return data;
     // }
     //repo for select by id
-    let userId = null;
+    let userEmail = null;
     jwt.verify(req.params.token, "mysecrettoken", (err, decoded) => {
       if (err) {
         return "wrong token";
       } else {
-        userId = decoded.user_id;
+        userEmail = decoded.user_email;
       }
     });
     // console.log(req.params.token)
-    const data = await User.findOne({ where: { user_id: userId } });
+    const data = await User.findOne({ where: { user_email: userEmail } });
     if (data) {
       return data;
     }
