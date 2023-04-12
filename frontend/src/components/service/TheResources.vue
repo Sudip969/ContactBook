@@ -97,7 +97,7 @@ export default {
     },
     async getUser() {
       const token = localStorage.getItem("token");
-      console.log(token);
+      
       this.$store.state.user = await axios.get(
         `http://localhost:3000/user/select/${token}`
       );
