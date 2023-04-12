@@ -4,7 +4,7 @@ const controller = require("../features/user/userController");
 // const auth = require("../features/Middleware/authorization.js")
 
 router.post("/user/signup", controller.insert);
-router.post ("/user/login",controller.login)
+router.post("/user/login", controller.login);
 
 router.get("/user/select/:token", controller.select);
 

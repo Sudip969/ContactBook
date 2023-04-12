@@ -17,14 +17,9 @@ const repObj = {
     } catch (er) {
       return "Email Should Be Unique";
     }
-    // user.tokens=token
-    // console.log(user.tokens)
-    // await User.update(user)
   },
   //repo for Login
   async login(req) {
-    // console.log("reach")
-    // console.log(req.body.user_email ,req.body.password)
     const user = await User.findOne({
       where: { user_email: req.body.user_email },
     });
@@ -40,22 +35,14 @@ const repObj = {
         return user;
       } else {
         return "Invalid Password";
-        // console.log("Passwords are not valid")
       }
     } else {
       return "Invalid Email";
-      // console.log("Email is not valid")
     }
   },
 
   //repo for select
   async select(req) {
-    //repo for select without id
-    // if (!req.params.name) {
-    //   const data = await User.findAll();
-    //   return data;
-    // }
-    //repo for select by id
     let userEmail = null;
     jwt.verify(req.params.token, "mysecrettoken", (err, decoded) => {
       if (err) {

@@ -1,38 +1,40 @@
 <template>
-<teleport to="body">
-<div @click="$emit('close')">
-</div>
+  <teleport to="body">
+    <div @click="$emit('close')"></div>
     <dialog open>
-        <header>
-            <slot name='header'>
-                <h2><span><BootstrapIcon icon="exclamation-triangle"/></span><span> {{title}}</span></h2>
-            </slot>
-        </header>
-        <section>
-            <slot></slot>
-        </section>
-        <menu>
-            <slot  name="actions"></slot>
-        </menu>
+      <header>
+        <slot name="header">
+          <h2>
+            <span><BootstrapIcon icon="exclamation-triangle" /></span
+            ><span> {{ title }}</span>
+          </h2>
+        </slot>
+      </header>
+      <section>
+        <slot></slot>
+      </section>
+      <menu>
+        <slot name="actions"></slot>
+      </menu>
     </dialog>
-</teleport>
+  </teleport>
 </template>
 
 <script>
-export default{
-    emits:['close'],
-    props:{
-        title:{
-            type:String,
-            required:false
-        }
-    }
-}
+export default {
+  emits: ["close"],
+  props: {
+    title: {
+      type: String,
+      required: false,
+    },
+  },
+};
 </script>
 
 <style scoped>
-.bi{
-    margin-right:10px;
+.bi {
+  margin-right: 10px;
 }
 div {
   position: fixed;
@@ -61,7 +63,7 @@ dialog {
 }
 
 header {
-  background-color:red;
+  background-color: red;
   color: white;
   width: 100%;
   padding: 1rem;
@@ -81,6 +83,4 @@ menu {
   justify-content: flex-end;
   margin: 0;
 }
-
-
 </style>

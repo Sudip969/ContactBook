@@ -74,7 +74,6 @@ export default {
   data() {
     return {
       detailsAreVisible: false,
- 
     };
   },
   async mounted() {

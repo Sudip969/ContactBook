@@ -7,5 +7,5 @@
 // import loginComponent from "./components/loginComponent.vue";
 export default {
   // components:{loginComponent}
-}
+};
 </script>

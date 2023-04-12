@@ -75,7 +75,7 @@
                     v-if="isEmail === 'invalid'"
                     >Email - Invalid</label
                   >
-                   <label
+                  <label
                     class="form-label"
                     for="email"
                     v-if="isEmail === 'Not Unique'"
@@ -107,7 +107,6 @@
                     v-if="isPassword === 'invalid'"
                     >Password - Input Password</label
                   >
-
                 </div>
               </div>
 
@@ -154,11 +153,11 @@ export default {
         "http://localhost:3000/user/signup",
         newUser
       );
-      if(typeof(this.$store.state.user.data)==="string"){
-        this.isEmail="Not Unique";
-      }else{
-      localStorage.setItem("token", this.$store.state.user.data.tokens);
-      this.$router.replace("/theresources");
+      if (typeof this.$store.state.user.data === "string") {
+        this.isEmail = "Not Unique";
+      } else {
+        localStorage.setItem("token", this.$store.state.user.data.tokens);
+        this.$router.replace("/theresources");
       }
     },
     validityName() {

@@ -25,11 +25,11 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    tokens:{
+    tokens: {
       // type: DataTypes.ARRAY(DataTypes.STRING),
-      type:DataTypes.STRING,
-      allowNull:true
-    }
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     sequelize,

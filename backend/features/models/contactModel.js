@@ -1,9 +1,10 @@
 const sequelize = require("../../DBconnection.js");
 const { DataTypes, Model } = require("sequelize");
 
-class User extends Model {}                   //Creating model by extending Model
+class User extends Model {} //Creating model by extending Model
 
-User.init(                                    //Define the Schema object
+User.init(
+  //Define the Schema object
   {
     id: {
       type: DataTypes.INTEGER,
@@ -14,23 +15,23 @@ User.init(                                    //Define the Schema object
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-    }, 
-    phone:{
+    },
+    phone: {
       type: DataTypes.STRING,
-      allowNull:false
+      allowNull: false,
     },
-    email:{
-      type:DataTypes.STRING,
-      allowNull:false
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-    favourite:{
-      type:DataTypes.BOOLEAN,
-      allowNull:true
+    favourite: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
     },
-    user_id:{
-      type:DataTypes.INTEGER,
-      allowNull:true
-    }
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
   {
     sequelize,

@@ -40,9 +40,12 @@
                 type="text"
                 placeholder="Search"
                 class="form-control"
-                v-model="searchedContact"/>
-              <span><button class="btn btn-success ms-1" @click="searchContact">
-                  <BootstrapIcon icon="search" /></button></span>
+                v-model="searchedContact"
+              />
+              <span
+                ><button class="btn btn-success ms-1" @click="searchContact">
+                  <BootstrapIcon icon="search" /></button
+              ></span>
             </li>
             <li>
               <a @click="logOut()" class="aOut"
@@ -65,7 +68,7 @@ export default {
     return {
       userName: "",
       userEmail: "",
-      
+
       searchedContact: "",
     };
   },
@@ -87,32 +90,34 @@ export default {
   },
   methods: {
     async getContacts() {
-      const userId=this.$store.state.user.data.user_id;
-      const contacts = await axios.get(`http://localhost:3000/select/${userId}`);
-      if(typeof(contacts.data)==="object"){
-        this.$store.state.friends=contacts.data
-      }else{
-      this.$store.state.friends = null;
-    }
+      const userId = this.$store.state.user.data.user_id;
+      const contacts = await axios.get(
+        `http://localhost:3000/select/${userId}`
+      );
+      if (typeof contacts.data === "object") {
+        this.$store.state.friends = contacts.data;
+      } else {
+        this.$store.state.friends = null;
+      }
     },
     async getUser() {
       const token = localStorage.getItem("token");
-      
+
       this.$store.state.user = await axios.get(
         `http://localhost:3000/user/select/${token}`
       );
       console.log(this.$store.state.user.data);
       this.userName = this.$store.state.user.data.user_name;
       this.userEmail = this.$store.state.user.data.user_email;
-      this.userId= this.$store.state.user.data.user_id;
+      this.userId = this.$store.state.user.data.user_id;
       this.$router.push("/theresources/friendcontacts");
     },
     logOut() {
       localStorage.clear("token");
       this.$router.replace("/login");
     },
-    async searchContact(){
-          this.$store.state.friends = [];
+    async searchContact() {
+      this.$store.state.friends = [];
       this.$store.state.friends.push(
         (
           await axios.get(
@@ -120,7 +125,7 @@ export default {
           )
         ).data
       );
-    }
+    },
   },
 };
 </script>

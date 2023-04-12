@@ -1,6 +1,5 @@
 const service = require("./contactService");
 const contObj = {
-
   //insert controller
   async insert(req, res) {
     res.send(await service.insert(req));
