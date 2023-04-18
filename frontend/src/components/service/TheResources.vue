@@ -90,10 +90,16 @@ export default {
   },
   methods: {
     async getContacts() {
+      const token = localStorage.getItem("token");
+       this.$store.state.user = await axios.get(
+        `http://localhost:3000/user/select/${token}`
+      );
       const userId = this.$store.state.user.data.user_id;
       const contacts = await axios.get(
-        `http://localhost:3000/select/${userId}`
+        `http://localhost:3000/select/${userId}`,
       );
+      // console.log(contacts)
+      // console.log(contacts.data)
       if (typeof contacts.data === "object") {
         this.$store.state.friends = contacts.data;
       } else {
@@ -127,7 +133,7 @@ export default {
       this.$store.state.user = await axios.get(
         `http://localhost:3000/user/select/${token}`
       );
-      console.log(this.$store.state.user.data);
+      // console.log(this.$store.state.user.data);
       this.userName = this.$store.state.user.data.user_name;
       this.userEmail = this.$store.state.user.data.user_email;
       this.userId = this.$store.state.user.data.user_id;
