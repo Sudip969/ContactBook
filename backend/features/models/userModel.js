@@ -12,6 +12,10 @@ User.init(
       autoIncrement: true,
       allowNull: false,
     },
+    googleId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     user_name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -23,7 +27,7 @@ User.init(
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     tokens: {
       // type: DataTypes.ARRAY(DataTypes.STRING),

@@ -17,7 +17,7 @@
                 class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start"
               >
                 <p class="lead fw-normal mb-0 me-3">Sign up with</p>
-                <button type="button" class="btn btn-success mt-1 mx-1">
+                <button type="button" class="btn btn-success mt-1 mx-1" @click="googleLogin()">
                   <BootstrapIcon icon="google" />
                 </button>
 
@@ -143,6 +143,9 @@ export default {
     };
   },
   methods: {
+        async googleLogin() {
+      window.location.href = "http://localhost:3000/auth/google";
+    },
     async signUp() {
       const newUser = {
         user_name: this.enteredName,

@@ -40,6 +40,24 @@ const repObj = {
       return "Invalid Email";
     }
   },
+  //repo for google login
+  async googleLogin(req) {
+    try {
+      const user = await User.findOne({
+        where: { user_email: req.body.user_email },
+      });
+      if (user) {
+        let token = await jwtToken(user);
+        await User.update(
+          { tokens: token },
+          { where: { user_id: user.user_id } }
+        );
+        return user;
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  },
 
   //repo for select
   async select(req) {

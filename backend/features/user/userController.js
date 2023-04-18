@@ -8,7 +8,12 @@ const contObj = {
   },
   //login controller
   async login(req, res) {
-    res.send(await service.login(req));
+    const user = await service.login(req);
+    res.send(user);
+  },
+  //Google login
+  async googleLogin(req, res) {
+    res.send(await service.googleLogin(req));
   },
 
   //select controller

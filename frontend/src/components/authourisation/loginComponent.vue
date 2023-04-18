@@ -20,6 +20,7 @@
                 <button
                   type="button"
                   class="btn btn-success btn-floating mt-1 mx-1"
+                  @click="googleLogin()"
                 >
                   <BootstrapIcon icon="google" />
                 </button>
@@ -125,7 +126,26 @@ export default {
       isPassword: "valid",
     };
   },
+  mounted() {
+    if (this.$route.query.id) {
+      this.getGoogleUser();
+    }
+  },
   methods: {
+    async getGoogleUser() {
+      const email = this.$route.query.id;
+      console.log(email);
+      const userEmail = { user_email: `${email}` };
+      const user = await axios.post(
+        `http://localhost:3000/user/googleLogin`,
+        userEmail
+      );
+      localStorage.setItem("token", user.data.tokens);
+      this.$router.push("/theresources");
+    },
+    async googleLogin() {
+      window.location.href = "http://localhost:3000/auth/google";
+    },
     async login() {
       const loginUser = {
         user_email: this.enteredEmail,

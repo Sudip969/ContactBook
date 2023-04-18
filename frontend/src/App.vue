@@ -4,8 +4,5 @@
   </section>
 </template>
 <script>
-// import loginComponent from "./components/loginComponent.vue";
-export default {
-  // components:{loginComponent}
-};
+export default {};
 </script>

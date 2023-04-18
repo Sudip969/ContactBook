@@ -33,7 +33,7 @@
                     Favourite
                   </button>
 
-                  <ul v-if="detailsAreVisible">
+                  <ul class="dUl" v-if="detailsAreVisible">
                     <li><strong>Phone:</strong>{{ friend.phone }}</li>
                     <li><strong>Email:</strong>{{ friend.email }}</li>
                   </ul>
@@ -118,7 +118,9 @@ export default {
 /* section{
     margin-left:20%
 } */
-
+.dUl {
+  margin-left: -18rem;
+}
 .bi {
   color: rgb(223, 223, 12);
   width: 20px;

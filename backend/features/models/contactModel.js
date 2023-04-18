@@ -1,9 +1,9 @@
 const sequelize = require("../../DBconnection.js");
 const { DataTypes, Model } = require("sequelize");
 
-class User extends Model {} //Creating model by extending Model
+class Contact extends Model {} //Creating model by extending Model
 
-User.init(
+Contact.init(
   //Define the Schema object
   {
     id: {
@@ -40,4 +40,4 @@ User.init(
   }
 );
 
-module.exports = User;
+module.exports = Contact;

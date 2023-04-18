@@ -8,6 +8,10 @@ const serObj = {
   async login(req) {
     return await repo.login(req);
   },
+  //service to google Login
+  async googleLogin(req) {
+    return await repo.googleLogin(req);
+  },
   //Service to Select
   async select(req) {
     return await repo.select(req);

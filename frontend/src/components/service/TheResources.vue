@@ -100,6 +100,27 @@ export default {
         this.$store.state.friends = null;
       }
     },
+    // async getGoogleUser() {
+    //   try{
+    //   const urlParams = new URLSearchParams(location.search);
+    //   let email=null
+    //   for (const value of urlParams.values()) {
+    //     email=value
+    //   }
+    //   console.log(email)
+    //   const userEmail={user_email:email}
+    //   const user = await axios.post(
+    //     `http://localhost:3000/user/googleLogin`,userEmail
+    //   );
+    //   console.log("this is resources")
+    //   console.log(user)
+    //   localStorage.setItem('token',user.tokens)
+    //   this.getUser()
+    //   }
+    //   catch(err){
+    //     console.log(err.message)
+    //   }
+    // },
     async getUser() {
       const token = localStorage.getItem("token");
 
@@ -112,9 +133,12 @@ export default {
       this.userId = this.$store.state.user.data.user_id;
       this.$router.push("/theresources/friendcontacts");
     },
-    logOut() {
+    async logOut() {
       localStorage.clear("token");
       this.$router.replace("/login");
+      if (this.$store.state.user.data.password === null) {
+        await axios.get("http://localhost:3000/logout");
+      }
     },
     async searchContact() {
       this.$store.state.friends = [];
