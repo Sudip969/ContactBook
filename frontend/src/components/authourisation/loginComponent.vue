@@ -95,6 +95,7 @@
                   style="padding-left: 2.5rem; padding-right: 2.5rem"
                   :disabled="isEmail === 'invalid'"
                   @click="login()"
+                  
                 >
                   Login
                 </button>
@@ -134,7 +135,6 @@ export default {
   methods: {
     async getGoogleUser() {
       const email = this.$route.query.id;
-      console.log(email);
       const userEmail = { user_email: `${email}` };
       const user = await axios.post(
         `http://localhost:3000/user/googleLogin`,

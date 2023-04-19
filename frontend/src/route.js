@@ -48,8 +48,9 @@ const router = createRouter({
 router.beforeEach(function (to, from, next) {
   if (to.meta.requiresAuth && !store.getters.isAuth) {
     next("/login");
+   
   }
-  // else if(to.meta.requiresUnauth && store.getters.isAuth){
+  // else if(.meta.requiresUnauth && store.getters.isAuth){
   //     next('/theresources')
   // }
   else {

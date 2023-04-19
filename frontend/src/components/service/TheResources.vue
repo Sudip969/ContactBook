@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios";  
 
 export default {
   data() {
@@ -98,42 +98,18 @@ export default {
       const contacts = await axios.get(
         `http://localhost:3000/select/${userId}`,
       );
-      // console.log(contacts)
-      // console.log(contacts.data)
       if (typeof contacts.data === "object") {
         this.$store.state.friends = contacts.data;
       } else {
         this.$store.state.friends = null;
       }
     },
-    // async getGoogleUser() {
-    //   try{
-    //   const urlParams = new URLSearchParams(location.search);
-    //   let email=null
-    //   for (const value of urlParams.values()) {
-    //     email=value
-    //   }
-    //   console.log(email)
-    //   const userEmail={user_email:email}
-    //   const user = await axios.post(
-    //     `http://localhost:3000/user/googleLogin`,userEmail
-    //   );
-    //   console.log("this is resources")
-    //   console.log(user)
-    //   localStorage.setItem('token',user.tokens)
-    //   this.getUser()
-    //   }
-    //   catch(err){
-    //     console.log(err.message)
-    //   }
-    // },
     async getUser() {
       const token = localStorage.getItem("token");
 
       this.$store.state.user = await axios.get(
         `http://localhost:3000/user/select/${token}`
       );
-      // console.log(this.$store.state.user.data);
       this.userName = this.$store.state.user.data.user_name;
       this.userEmail = this.$store.state.user.data.user_email;
       this.userId = this.$store.state.user.data.user_id;
@@ -201,7 +177,6 @@ a.router-link-active {
   width: 225px;
   height: 100%;
   padding: 20px 0;
-  /* transition: all 0.5s ease; */
 }
 
 .wrapper .sidebar .profile img {
@@ -224,7 +199,6 @@ a.router-link-active {
 }
 
 .wrapper .sidebar .profile {
-  /* margin-bottom: 10px  ; */
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -246,7 +220,6 @@ h2 {
   display: block;
   padding: 13px 30px;
   border-bottom: 1px solid #055698;
-  /* color: rgb(241, 237, 237); */
   font-size: 16px;
   position: relative;
 }
