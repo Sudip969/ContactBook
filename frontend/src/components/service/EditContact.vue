@@ -1,5 +1,5 @@
 <template>
-  <section class="mt-5">
+  <section >
     <base-dialog
       v-if="inputIsInvalid"
       title="Invalid Input"
@@ -13,7 +13,7 @@
         <button class="btn btn-danger" @click="confirmError">Okay</button>
       </template>
     </base-dialog>
-    <ul>
+    <ul class="sec">
       <li>
         <div class="container-fluid">
           <div class="row d-flex justify-content-center align-items-center">
@@ -64,6 +64,7 @@
                   <button
                     class="btn btn-success border border-dark"
                     @click="editContact()"
+                    :disabled="disableButton"
                   >
                     Confirm
                   </button>
@@ -97,6 +98,8 @@ export default {
       userName: "pending",
       phoneNumber: "pending",
       email: "pending",
+      checkUser:null,
+
     };
   },
   created() {
@@ -106,7 +109,7 @@ export default {
     const friend = this.$store.state.friends.find(
       (frnd) => frnd.id === this.id
     );
-    console.log(friend.name);
+    this.checkUser=friend
     this.editName = friend.name;
     this.editNo = friend.phone;
     this.editEmail = friend.email;
@@ -170,6 +173,9 @@ export default {
 </script>
 
 <style scoped>
+.sec{
+  margin-top:6rem
+}
 button {
   margin-left: 2px;
 }

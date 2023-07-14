@@ -5,6 +5,7 @@ const store = createStore({
     return {
       user: null,
       friends: [],
+      contactFound:true
     };
   },
   getters: {

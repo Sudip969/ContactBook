@@ -1,6 +1,6 @@
 <template>
   <section>
-    <header>
+    <header class="fixed-top">
       <h1>
         <span><BootstrapIcon icon="person-vcard-fill" /></span
         ><span>Friend Contacts</span>
@@ -31,11 +31,10 @@
                 ><span>Add Friend</span></router-link
               >
             </li>
-          </ul>
-        </div>
-        <div class="menu">
-          <ul>
-            <li class="d-inline-flex">
+            <li>
+              <router-link :to="'/UserSettings/' + userId"><span><BootstrapIcon icon="gear" /></span><span>Settings</span></router-link>
+            </li>
+            <li class="d-inline-flex mt-3">
               <input
                 type="text"
                 placeholder="Search"
@@ -47,6 +46,10 @@
                   <BootstrapIcon icon="search" /></button
               ></span>
             </li>
+          </ul>
+        </div>
+        <div class="menu">
+          <ul>
             <li>
               <a @click="logOut()" class="aOut"
                 ><span><BootstrapIcon icon="box-arrow-right" /></span>Log out</a
@@ -61,14 +64,14 @@
 </template>
 
 <script>
-import axios from "axios";  
-
+import axios from "axios";
+import jwt_decode from "jwt-decode";
 export default {
   data() {
     return {
       userName: "",
       userEmail: "",
-
+   
       searchedContact: "",
     };
   },
@@ -81,6 +84,7 @@ export default {
   watch: {
     searchedContact(changes) {
       if (changes === "") {
+        this.$store.state.contactFound = true;
         this.getContacts();
       }
     },
@@ -91,28 +95,28 @@ export default {
   methods: {
     async getContacts() {
       const token = localStorage.getItem("token");
-       this.$store.state.user = await axios.get(
-        `http://localhost:3000/user/select/${token}`
-      );
-      const userId = this.$store.state.user.data.user_id;
+      this.$store.state.user = jwt_decode(token);
+      //  this.$store.state.user = await axios.get(
+      //   `http://localhost:3000/user/select/${token}`
+      // );
+      const userId = this.$store.state.user.user_id;
       const contacts = await axios.get(
-        `http://localhost:3000/select/${userId}`,
+        `http://localhost:3000/select/${userId}`
       );
       if (typeof contacts.data === "object") {
         this.$store.state.friends = contacts.data;
       } else {
+        this.$store.state.contactFound = false;
         this.$store.state.friends = null;
       }
     },
     async getUser() {
       const token = localStorage.getItem("token");
 
-      this.$store.state.user = await axios.get(
-        `http://localhost:3000/user/select/${token}`
-      );
-      this.userName = this.$store.state.user.data.user_name;
-      this.userEmail = this.$store.state.user.data.user_email;
-      this.userId = this.$store.state.user.data.user_id;
+      this.$store.state.user = jwt_decode(token);
+      this.userName = this.$store.state.user.user_name;
+      this.userEmail = this.$store.state.user.user_email;
+      this.userId = this.$store.state.user.user_id;
       this.$router.push("/theresources/friendcontacts");
     },
     async logOut() {
@@ -123,14 +127,19 @@ export default {
       }
     },
     async searchContact() {
-      this.$store.state.friends = [];
-      this.$store.state.friends.push(
-        (
+      if (this.searchedContact) {
+        this.$store.state.friends = [];
+        const sFriend = (
           await axios.get(
             `http://localhost:3000/select/${this.userId}/${this.searchedContact}`
           )
-        ).data
-      );
+        ).data;
+        if (typeof sFriend == "string") {
+          this.$store.state.contactFound = false;
+        } else {
+          this.$store.state.friends.push(sFriend);
+        }
+      }
     },
   },
 };
@@ -144,7 +153,7 @@ input {
 
 .aOut {
   position: absolute;
-  top: 17rem;
+  top: 12rem;
   border-top: 1px solid #055698;
   font-size: 16px;
 }

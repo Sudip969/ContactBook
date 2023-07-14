@@ -60,22 +60,22 @@ const repObj = {
   },
 
   //repo for select
-  async select(req) {
-    let userEmail = null;
-    jwt.verify(req.params.token, "mysecrettoken", (err, decoded) => {
-      if (err) {
-        return "wrong token";
-      } else {
-        userEmail = decoded.user_email;
-      }
-    });
-    // console.log(req.params.token)
-    const data = await User.findOne({ where: { user_email: userEmail } });
-    if (data) {
-      return data;
-    }
-    return "No such Data present";
-  },
+  // async select(req) {
+  //   let userEmail = null;
+  //   jwt.verify(req.params.token, "mysecrettoken", (err, decoded) => {
+  //     if (err) {
+  //       return "wrong token";
+  //     } else {
+  //       userEmail = decoded.user_email;
+  //     }
+  //   });
+  //   // console.log(req.params.token)
+  //   const data = await User.findOne({ where: { user_email: userEmail } });
+  //   if (data) {
+  //     return data;
+  //   }
+  //   return "No such Data present";
+  // },
 
   //repo for delete
   async delete(req) {

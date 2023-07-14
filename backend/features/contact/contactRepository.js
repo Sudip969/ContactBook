@@ -1,4 +1,5 @@
 const User = require("../models/contactModel.js");
+const {Op} = require("sequelize")
 const repObj = {
   //repo for insert
   async insert(req) {
@@ -18,7 +19,8 @@ const repObj = {
       return data;
     }
     //repo for select by name
-    const data = await User.findOne({ where: { name: req.params.name } });
+    req.params.name=req.params.name.toLowerCase();  
+    const data = await User.findOne({ where: { name:{[Op.iLike]: req.params.name} , user_id: req.params.userId} });
     if (data) {
       return data;
     }

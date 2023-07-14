@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="sec">
     <div class="container-fluid">
       <div class="row d-flex justify-content-center align-items-center">
         <ul class="topUl">
@@ -60,6 +60,11 @@
             </ul>
           </li>
         </ul>
+        <ul v-if="!this.$store.state.contactFound" >
+          <li  class="noLi">
+          <p class="p-5 h3 text-muted">No Result Found</p>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
@@ -118,6 +123,13 @@ export default {
 /* section{
     margin-left:20%
 } */
+section{
+  margin-top:4.5rem
+}
+.noLi{
+  margin-left: 4rem;
+ 
+}
 .dUl {
   margin-left: -18rem;
 }

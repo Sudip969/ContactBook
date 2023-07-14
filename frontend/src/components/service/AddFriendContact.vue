@@ -13,7 +13,7 @@
         <button class="btn btn-danger" @click="confirmError">Okay</button>
       </template>
     </base-dialog>
-    <ul>
+    <ul class="sec">
       <li>
         <div class="container-fluid">
           <div class="row d-flex justify-content-center align-items-center">
@@ -148,12 +148,10 @@ export default {
         phone: phone,
         email: email,
         favourite: false,
-        user_id: this.$store.state.user.data.user_id,
+        user_id: this.$store.state.user.user_id,
       };
-
-      console.log(newFriend);
-      const user = await axios.post("http://localhost:3000/insert", newFriend);
-      console.log(user);
+       await axios.post("http://localhost:3000/insert", newFriend);
+    
       this.$router.push("/theresources/friendcontacts");
     },
   },
@@ -161,6 +159,9 @@ export default {
 </script>
 
 <style scoped>
+.sec{
+  margin-top:6rem;
+}
 .invalid input {
   border-color: red;
 }

@@ -95,7 +95,6 @@
                   style="padding-left: 2.5rem; padding-right: 2.5rem"
                   :disabled="isEmail === 'invalid'"
                   @click="login()"
-                  
                 >
                   Login
                 </button>
@@ -130,6 +129,8 @@ export default {
   mounted() {
     if (this.$route.query.id) {
       this.getGoogleUser();
+    } else if (localStorage.getItem("token")) {
+      this.$router.push("/theresources");
     }
   },
   methods: {

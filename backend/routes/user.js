@@ -8,7 +8,7 @@ router.post("/user/signup", controller.insert);
 router.post("/user/login", controller.login);
 router.post("/user/googleLogin", controller.googleLogin);
 
-router.get("/user/select/:token", controller.select);
+// router.get("/user/select/:token", controller.select);
 
 router.get(
   "/auth/google",
